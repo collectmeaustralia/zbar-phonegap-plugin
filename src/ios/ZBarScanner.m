@@ -44,9 +44,9 @@
     //      config: ZBAR_CFG_ENABLE
     //      to: 0];
 
-    [reader.scanner setSymbology: ZBAR_QRCODE
-                config: ZBAR_CFG_ENABLE
-                to: 1];
+    // [reader.scanner setSymbology: ZBAR_QRCODE
+    //             config: ZBAR_CFG_ENABLE
+    //             to: 1];
 
     [self.viewController presentModalViewController: reader
                             animated: YES];
