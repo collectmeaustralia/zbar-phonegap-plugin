@@ -1,0 +1,2 @@
+zbar-phonegap-plugin
+====================
