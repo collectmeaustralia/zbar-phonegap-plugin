@@ -4,7 +4,7 @@
     version="0.0.1">
 
     <name>ZBarScanner</name>
-    <description>Scans Barcodes.</description>
+    <description>Scans Barcodes. On iOS. With ZBar.</description>
     <license></license>
 
     <engines>
