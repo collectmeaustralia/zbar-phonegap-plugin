@@ -46,22 +46,22 @@
 - (void)scan:(CDVInvokedUrlCommand *)command {
 
     // Check command.arguments here.
-    [self.commandDelegate runInBackground:^{
-        // NSString* payload = nil;
-        // // Some blocking logic...
-        // CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:payload];
-        // // The sendPluginResult method is thread-safe.
-        // [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    // [self.commandDelegate runInBackground:^{
+    //     // NSString* payload = nil;
+    //     // // Some blocking logic...
+    //     // CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:payload];
+    //     // // The sendPluginResult method is thread-safe.
+    //     // [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId]; 
+    // }];
 
-        if (self.hasPendingOperation) {
-            return;
-        }
-        self.hasPendingOperation = YES;
-        
-        self.callbackId = command.callbackId;
-        [self.viewController presentModalViewController: self.reader
-                                animated: YES];
-    }];
+    if (self.hasPendingOperation) {
+        return;
+    }
+    self.hasPendingOperation = YES;
+    
+    self.callbackId = command.callbackId;
+    [self.viewController presentModalViewController: self.reader
+                            animated: YES];
 
     
     
