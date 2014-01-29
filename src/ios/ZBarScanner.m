@@ -33,18 +33,42 @@
 @synthesize reader;
 @synthesize hasPendingOperation;
 
-- (void)scan:(CDVInvokedUrlCommand *)command {
-
-    if (self.hasPendingOperation) {
-        return;
-    }
-    self.hasPendingOperation = YES;
-    
-    
-    self.callbackId = command.callbackId;
-    
+- (void)pluginInitialize {
     self.reader = [ZBarReaderViewController new];
     self.reader.readerDelegate = self;
+}
+
+- (void)dispose {
+    self.reader = nil;
+    [super dispose];
+}
+
+- (void)scan:(CDVInvokedUrlCommand *)command {
+
+    // Check command.arguments here.
+    [self.commandDelegate runInBackground:^{
+        // NSString* payload = nil;
+        // // Some blocking logic...
+        // CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:payload];
+        // // The sendPluginResult method is thread-safe.
+        // [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+
+        if (self.hasPendingOperation) {
+            return;
+        }
+        self.hasPendingOperation = YES;
+        
+        self.callbackId = command.callbackId;
+        [self.viewController presentModalViewController: self.reader
+                                animated: YES];
+    }];
+
+    
+    
+    // if (!self.reader) {
+    //     self.reader = [ZBarReaderViewController new];
+    //     self.reader.readerDelegate = self;
+    // }
 
     // disable all symbols - useful to re-enable specific codes only
     // [reader.scanner setSymbology: 0
@@ -55,8 +79,6 @@
     //             config: ZBAR_CFG_ENABLE
     //             to: 1];
 
-    [self.viewController presentModalViewController: self.reader
-                            animated: YES];
     
     // queue [processor scanBarcode] to run on the event loop
 //    [processor performSelector:@selector(scanBarcode) withObject:nil afterDelay:0];
@@ -75,10 +97,11 @@
                                resultWithStatus: CDVCommandStatus_OK
                                messageAsDictionary: resultDict
                                ];
+    [self.commandDelegate sendPluginResult:result callbackId:callback];
 
-    NSString* js = [result toSuccessCallbackString:callback];
+    // NSString* js = [result toSuccessCallbackString:callback];
 
-    [self writeJavascript:js];
+    // [self writeJavascript:js];
 
     self.hasPendingOperation = NO;
 }
@@ -114,7 +137,7 @@
     
     [picker dismissModalViewControllerAnimated: YES];
 
-    self.reader = nil;
+    // self.reader = nil;
     
     [self returnSuccess:sym.data format:sym.typeName cancelled:FALSE callback:self.callbackId];
 }
