@@ -142,4 +142,9 @@
     [self returnSuccess:sym.data format:sym.typeName cancelled:FALSE callback:self.callbackId];
 }
 
+- (void) imagePickerControllerDidCancel:(UIImagePickerController*)picker {
+    [picker dismissModalViewControllerAnimated: YES];
+    [self returnSuccess:@"" format:@"" cancelled:TRUE callback:self.callbackId];
+}
+
 @end
