@@ -30,14 +30,21 @@
     // ZBAR_CODE128
 
 @synthesize callbackId;
+@synthesize reader;
+@synthesize hasPendingOperation;
 
 - (void)scan:(CDVInvokedUrlCommand *)command {
+
+    if (self.hasPendingOperation) {
+        return;
+    }
+    self.hasPendingOperation = YES;
     
     
     self.callbackId = command.callbackId;
     
-    ZBarReaderViewController *reader = [ZBarReaderViewController new];
-    reader.readerDelegate = self;
+    self.reader = [ZBarReaderViewController new];
+    self.reader.readerDelegate = self;
 
     // disable all symbols - useful to re-enable specific codes only
     // [reader.scanner setSymbology: 0
@@ -48,7 +55,7 @@
     //             config: ZBAR_CFG_ENABLE
     //             to: 1];
 
-    [self.viewController presentModalViewController: reader
+    [self.viewController presentModalViewController: self.reader
                             animated: YES];
     
     // queue [processor scanBarcode] to run on the event loop
@@ -72,6 +79,8 @@
     NSString* js = [result toSuccessCallbackString:callback];
 
     [self writeJavascript:js];
+
+    self.hasPendingOperation = NO;
 }
 
 //--------------------------------------------------------------------------
@@ -104,6 +113,8 @@
 //    barcode.data = sym.data;
     
     [picker dismissModalViewControllerAnimated: YES];
+
+    self.reader = nil;
     
     [self returnSuccess:sym.data format:sym.typeName cancelled:FALSE callback:self.callbackId];
 }
