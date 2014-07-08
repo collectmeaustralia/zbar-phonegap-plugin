@@ -4,7 +4,7 @@ zbar-phonegap-plugin
 This plugin is for iOS only.
 
 Usage:
-
+```
 if (cordova.plugins.zbarScanner) {
 	scanner = {};
 	scanner.scan = function (callback) {
@@ -17,3 +17,4 @@ if (cordova.plugins.zbarScanner) {
 		);
 	}
 }
+```
