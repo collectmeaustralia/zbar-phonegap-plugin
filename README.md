@@ -11,7 +11,7 @@ This plugin is for iOS only.
 Usage Example:
 
 ```
-if (cordova.plugins.zbarScanner) {
+if (cordova.plugins.zbarScanner && navigator.userAgent.match(/iPhone|iPad|iPod/i)) { // We must make sure it's triggered ONLY for iOS
 	scanner = {};
 	scanner.scan = function (callback) {
 		cordova.plugins.zbarScanner.scan(
@@ -36,7 +36,7 @@ In the Javascript, in order to use both - you can simply do this:
 if (!window.plugins) {
 	window.plugins = {};
 }
-if (cordova.plugins.zbarScanner) {
+if (cordova.plugins.zbarScanner && navigator.userAgent.match(/iPhone|iPad|iPod/i)) { // We must make sure it's triggered ONLY for iOS
 	// If ZBar scanner is installed - we use it
 	window.plugins.barcodeScanner = cordova.plugins.zbarScanner;
 } else if (cordova.plugins && cordova.plugins.barcodeScanner) {
