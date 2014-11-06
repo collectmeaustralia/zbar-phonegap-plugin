@@ -52,6 +52,7 @@
         <source-file src="src/ios/ZBarScannerController.m" />
 
         <source-file src="src/ios/ZBarSDK/libzbar.a" framework="true" />
+        <source-file src="src/ios/ZBarSDK/libzbar-sim.a" framework="true" />
 
         <framework src="libiconv.dylib" />
         <framework src="AVFoundation.framework" />
